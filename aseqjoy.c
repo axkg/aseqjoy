@@ -1,6 +1,6 @@
 /**
  * aseqjoy - Tiny Jostick -> MIDI Controller Tool
- * Copyright 2003 by Alexander Koenig - alex@lisas.de
+ * Copyright 2003-2016 by Alexander Koenig - alex@lisas.de
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -112,7 +112,7 @@ int open_joystick()
 	ioctl(joy_fd, JSIOCGBUTTONS, &buttons);
 	ioctl(joy_fd, JSIOCGNAME(NAME_LENGTH), name);
 
-	printf("Using Joystick (%s) through device %s with %i axes and %i buttons.\n", name, device, axes, buttons);
+	printf("Using joystick (%s) through device %s with %i axes and %i buttons.\n", name, device, axes, buttons);
 
 	return 0;
 }
@@ -173,8 +173,6 @@ void loop()
 				val_i=(int) val_d;
 			
 				if (values[js.number].last_value!=val_i) {
-					values[js.number].last_value!=val_i;
-					
 					if (cc14) {
 						ev.type = SND_SEQ_EVENT_CONTROL14;
 					} else {					
@@ -202,7 +200,7 @@ void loop()
 int main (int argc, char **argv)
 {
 	int i;
-        fprintf(stderr, "%s Version %s - Copyright (C) 2003 by Alexander König\n",  TOOL_NAME, VERSION);
+        fprintf(stderr, "%s version %s - Copyright (C) 2003-2016 by Alexander Koenig\n",  TOOL_NAME, VERSION);
         fprintf(stderr, "%s comes with ABSOLUTELY NO WARRANTY - for details read the license.\n", TOOL_NAME);
 
 	for (i=0; i<4; i++) {
@@ -216,11 +214,12 @@ int main (int argc, char **argv)
 		switch (i) {
 			case '?':
 			case 'h':
-				printf("usage: %s [-d joystick_no] [-v] [-0 ctrl0] [-1 ctrl1] [-2 ctrl2] [-3 ctrl3]\n\n", TOOL_NAME);
-				puts("\t-d Select the Joystick to use: 0..3");
-				puts("\t-0 Select the Controller for Axis 0 (1-127).");
-				puts("\t-1 Select the Controller for Axis 1 (1-127). Etc.");
-				puts("\t-v Verbose mode.");
+				printf("usase: %s [-d joystick_no] [-v] [-0 ctrl0] [-1 ctrl1] [-2 ctrl2] [-3 ctrl3]\n\n", TOOL_NAME);
+				puts("\t-d select the joystick to use: 0..3");
+				puts("\t-0 select the controller for axis 0 (1-127)");
+				puts("\t-1 select the controller for axis 1 (1-127) etc");
+				puts("\t-r use fine control change events (14 bit resolution)");
+				puts("\t-v verbose mode.");
 				exit(-2);
 			break;
 			
@@ -253,9 +252,6 @@ int main (int argc, char **argv)
 			break;
 		}
 	}
-
-
-	snd_seq_addr_t dest;
 
 	open_joystick();
 	open_alsa_seq();
