@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(aseqjoy.c)
-AM_INIT_AUTOMAKE(aseqjoy, 0.0.1)
+AM_INIT_AUTOMAKE(aseqjoy, 0.0.2)
 AM_CONFIG_HEADER(config.h)
 
 dnl Checks for programs.
